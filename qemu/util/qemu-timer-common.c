@@ -48,11 +48,13 @@ int use_rt_clock;
 
 void init_get_clock(void)
 {
+#ifndef UNICORN_FOR_EFI
     struct timespec ts;
 
     use_rt_clock = 0;
     if (clock_gettime(CLOCK_MONOTONIC, &ts) == 0) {
-        use_rt_clock = 1;
+       use_rt_clock = 1;
     }
+#endif
 }
 #endif

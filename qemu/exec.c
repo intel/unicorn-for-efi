@@ -1904,6 +1904,7 @@ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
         address_space_write(as, as->uc->bounce.addr, MEMTXATTRS_UNSPECIFIED,
                             as->uc->bounce.buffer, access_len);
     }
+
     qemu_vfree(as->uc->bounce.buffer);
     as->uc->bounce.buffer = NULL;
 }

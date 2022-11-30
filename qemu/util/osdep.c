@@ -23,6 +23,8 @@
  */
 #include "qemu/osdep.h"
 
+#ifndef UNICORN_FOR_EFI
+
 /* Needed early for CONFIG_BSD etc. */
 
 #ifdef CONFIG_SOLARIS
@@ -88,3 +90,5 @@ int qemu_mprotect_none(void *addr, size_t size)
     return qemu_mprotect__osdep(addr, size, PROT_NONE);
 #endif
 }
+
+#endif /* UNICORN_FOR_EFI */

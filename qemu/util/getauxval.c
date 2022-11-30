@@ -25,6 +25,7 @@
 #include "qemu/osdep.h"
 
 #ifdef CONFIG_GETAUXVAL
+
 /* Don't inline this in qemu/osdep.h, because pulling in <sys/auxv.h> for
    the system declaration of getauxval pulls in the system <elf.h>, which
    conflicts with qemu's version.  */
@@ -34,6 +35,11 @@
 unsigned long qemu_getauxval(unsigned long key)
 {
     return getauxval(key);
+}
+#elif defined(UNICORN_FOR_EFI)
+unsigned long qemu_getauxval(unsigned long type)
+{
+    return 0;
 }
 #elif defined(__linux__)
 #include "elf.h"

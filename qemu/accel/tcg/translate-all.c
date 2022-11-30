@@ -752,7 +752,10 @@ static void page_lock_pair(struct uc_struct *uc, PageDesc **ret_p1, tb_page_addr
 /* Maximum size of the code gen buffer we'd like to use.  Unless otherwise
    indicated, this is constrained by the range of direct branches on the
    host cpu, as used by the TCG implementation of goto_tb.  */
-#if defined(__x86_64__)
+
+#if defined(UNICORN_FOR_EFI) && defined(UNICORN_FOR_EFI_MAX_TB_SIZE)
+# define MAX_CODE_GEN_BUFFER_SIZE  UNICORN_FOR_EFI_MAX_TB_SIZE
+#elif defined(__x86_64__)
 # define MAX_CODE_GEN_BUFFER_SIZE  (2 * GiB)
 #elif defined(__sparc__)
 # define MAX_CODE_GEN_BUFFER_SIZE  (2 * GiB)
@@ -867,6 +870,20 @@ static inline void *alloc_code_gen_buffer(struct uc_struct *uc)
     qemu_madvise(buf, size, QEMU_MADV_HUGEPAGE);
 
     return buf;
+}
+#elif defined(UNICORN_FOR_EFI)
+static inline void *alloc_code_gen_buffer(struct uc_struct *uc)
+{
+    TCGContext *tcg_ctx = uc->tcg_ctx;
+    size_t size = tcg_ctx->code_gen_buffer_size;
+    return efi_alloc_code_pages(size);
+}
+void free_code_gen_buffer(struct uc_struct *uc)
+{
+    TCGContext *tcg_ctx = uc->tcg_ctx;
+    if (tcg_ctx->initial_buffer) {
+      efi_free_code_pages(tcg_ctx->initial_buffer, tcg_ctx->initial_buffer_size);
+    }
 }
 #elif defined(_WIN32)
 static inline void *alloc_code_gen_buffer(struct uc_struct *uc)

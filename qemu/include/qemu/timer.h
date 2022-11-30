@@ -800,6 +800,12 @@ static inline int64_t get_clock_realtime(void)
 
     return tv_sec * 1000000000LL + (tv_usec * 1000);
 }
+#elif defined(UNICORN_FOR_EFI)
+/* get host real time in nanosecond */
+static inline int64_t get_clock_realtime(void)
+{
+    return efi_get_timer_ns();
+}
 #else
 /* get host real time in nanosecond */
 static inline int64_t get_clock_realtime(void)
@@ -814,7 +820,12 @@ static inline int64_t get_clock_realtime(void)
 /* Warning: don't insert tracepoints into these functions, they are
    also used by simpletrace backend and tracepoints would cause
    an infinite recursion! */
-#ifdef _WIN32
+#if defined(UNICORN_FOR_EFI)
+static inline int64_t get_clock(void)
+{
+  return get_clock_realtime();
+}
+#elif defined(_WIN32)
 extern int64_t clock_freq;
 
 static inline int64_t get_clock(void)
@@ -993,6 +1004,11 @@ static inline int64_t cpu_get_host_ticks(void)
     return cur - ofs;
 }
 
+#elif defined(UNICORN_FOR_EFI)
+static inline int64_t cpu_get_host_ticks(void)
+{
+    return efi_get_timer_ticks();
+}
 #else
 /* The host CPU doesn't have an easily accessible cycle counter.
    Just return a monotonically increasing value.  This will be

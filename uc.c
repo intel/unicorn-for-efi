@@ -667,6 +667,7 @@ uc_err uc_mem_write(uc_engine *uc, uint64_t address, const void *_bytes,
     }
 }
 
+#ifndef UNICORN_FOR_EFI
 #define TIMEOUT_STEP 2 // microseconds
 static void *_timeout_fn(void *arg)
 {
@@ -697,6 +698,7 @@ static void enable_emu_timer(uc_engine *uc, uint64_t timeout)
     qemu_thread_create(uc, &uc->timer, "timeout", _timeout_fn, uc,
                        QEMU_THREAD_JOINABLE);
 }
+#endif
 
 static void hook_count_cb(struct uc_struct *uc, uint64_t address, uint32_t size,
                           void *user_data)
@@ -874,7 +876,11 @@ uc_err uc_emu_start(uc_engine *uc, uint64_t begin, uint64_t until,
     }
 
     if (timeout) {
+#ifdef UNICORN_FOR_EFI
+        return UC_ERR_ARG;
+#else
         enable_emu_timer(uc, timeout * 1000); // microseconds -> nanoseconds
+#endif
     }
 
     uc->vm_start(uc);
@@ -891,10 +897,12 @@ uc_err uc_emu_start(uc_engine *uc, uint64_t begin, uint64_t until,
         clear_deleted_hooks(uc);
     }
 
+#ifndef UNICORN_FOR_EFI
     if (timeout) {
         // wait for the timer to finish
         qemu_thread_join(&uc->timer);
     }
+#endif
 
     // We may be in a nested uc_emu_start and thus clear invalid_error
     // once we are done.

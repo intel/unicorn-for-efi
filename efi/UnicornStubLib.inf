@@ -1,0 +1,37 @@
+## @file
+#
+#  Copyright (c) 2022, Intel Corporation. All rights reserved.<BR>
+#
+#  This library is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU Lesser General Public
+#  License as published by the Free Software Foundation; either
+#  version 2 of the License, or (at your option) any later version.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = UnicornStubLib
+  FILE_GUID                      = 6987936E-BBBB-45db-AE97-1FA5E4ED2116
+  MODULE_TYPE                    = UEFI_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = UnicornStubLib
+
+[Sources]
+  weak.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  unicorn/efi/UnicornPkg.dec
+
+[LibraryClasses]
+
+[FeaturePcd]
+
+[Pcd]
+
+[Guids]
+
+[BuildOptions]
+GCC:*_*_*_CC_FLAGS = -nostdinc -DUNICORN_FOR_EFI_INTERNAL

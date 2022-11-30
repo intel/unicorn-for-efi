@@ -1,0 +1,86 @@
+## @file
+#
+#  Copyright (c) 2022, Intel Corporation. All rights reserved.<BR>
+#
+#  This library is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU Lesser General Public
+#  License as published by the Free Software Foundation; either
+#  version 2 of the License, or (at your option) any later version.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = UnicornX86Lib
+  FILE_GUID                      = 6987936E-ED34-46db-AE97-1FA5E4ED2116
+  MODULE_TYPE                    = UEFI_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = UnicornX86Lib
+  UNICORN_EMU_ARCH               = i386
+
+[Sources]
+  ../qemu/exec.c
+  ../qemu/exec-vary.c
+
+  ../qemu/softmmu/cpus.c
+  ../qemu/softmmu/ioport.c
+  ../qemu/softmmu/memory.c
+  ../qemu/softmmu/memory_mapping.c
+
+  ../qemu/fpu/softfloat.c
+
+  ../qemu/tcg/optimize.c
+  ../qemu/tcg/tcg.c
+  ../qemu/tcg/tcg-op.c
+  ../qemu/tcg/tcg-op-gvec.c
+  ../qemu/tcg/tcg-op-vec.c
+
+  ../qemu/accel/tcg/cpu-exec.c
+  ../qemu/accel/tcg/cpu-exec-common.c
+  ../qemu/accel/tcg/cputlb.c
+  ../qemu/accel/tcg/tcg-all.c
+  ../qemu/accel/tcg/tcg-runtime.c
+  ../qemu/accel/tcg/tcg-runtime-gvec.c
+  ../qemu/accel/tcg/translate-all.c
+  ../qemu/accel/tcg/translator.c
+
+  ../qemu/hw/i386/x86.c
+
+  ../qemu/target/i386/arch_memory_mapping.c
+  ../qemu/target/i386/bpt_helper.c
+  ../qemu/target/i386/cc_helper.c
+  ../qemu/target/i386/cpu.c
+  ../qemu/target/i386/excp_helper.c
+  ../qemu/target/i386/fpu_helper.c
+  ../qemu/target/i386/helper.c
+  ../qemu/target/i386/int_helper.c
+  ../qemu/target/i386/machine.c
+  ../qemu/target/i386/mem_helper.c
+  ../qemu/target/i386/misc_helper.c
+  ../qemu/target/i386/mpx_helper.c
+  ../qemu/target/i386/seg_helper.c
+  ../qemu/target/i386/smm_helper.c
+  ../qemu/target/i386/svm_helper.c
+  ../qemu/target/i386/translate.c
+  ../qemu/target/i386/xsave_helper.c
+  ../qemu/target/i386/unicorn.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  unicorn/efi/UnicornPkg.dec
+
+[LibraryClasses]
+
+[FeaturePcd]
+
+[Pcd]
+
+[BuildOptions]
+GCC:*_*_*_CC_FLAGS = -nostdinc -I$(MODULE_DIR)/.. -I$(MODULE_DIR)/../include -I$(MODULE_DIR)/../qemu -I$(MODULE_DIR)/../qemu/include -I$(MODULE_DIR)/../qemu/tcg -I$(MODULE_DIR)/../qemu/target/$(UNICORN_EMU_ARCH) -I$(MODULE_DIR)/../glib_compat -include x86_64.h -DCONFIG_TARGET_HEADER=\"config-target-$(UNICORN_EMU_ARCH).h\" -DUNICORN_FOR_EFI -DUNICORN_HAS_X86 -DNEED_CPU_H -DUNICORN_FOR_EFI_INTERNAL
+
+[BuildOptions.AARCH64]
+GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/aarch64
+
+[BuildOptions.RISCV64]
+GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/riscv

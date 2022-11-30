@@ -223,6 +223,7 @@ static void qht_map_destroy(struct qht_map *map)
     for (i = 0; i < map->n_buckets; i++) {
         qht_chain_destroy(&map->buckets[i]);
     }
+
     qemu_vfree(map->buckets);
     g_free(map);
 }

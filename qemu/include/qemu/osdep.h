@@ -29,7 +29,11 @@
 
 #include "config-host.h"
 #ifdef NEED_CPU_H
+#ifdef CONFIG_TARGET_HEADER
+#include CONFIG_TARGET_HEADER
+#else /* !CONFIG_TARGET_HEADER */
 #include "config-target.h"
+#endif /* CONFIG_TARGET_HEADER */
 #else
 #include "exec/poison.h"
 #endif

@@ -1,0 +1,99 @@
+## @file
+#
+#  Copyright (c) 2022, Intel Corporation. All rights reserved.<BR>
+#
+#  This library is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU Lesser General Public
+#  License as published by the Free Software Foundation; either
+#  version 2 of the License, or (at your option) any later version.
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = UnicornEngineLib
+  FILE_GUID                      = 6987936E-ED34-45db-AE97-1FA5E4ED2116
+  MODULE_TYPE                    = UEFI_DRIVER
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = UnicornEngineLib
+
+[Sources.RISCV64]
+  riscv/glue.c
+  riscv/ctz.c
+  riscv/clz.c
+  riscv/popcount.c
+  riscv/clrsb.c
+
+[Sources.AARCH64]
+  aarch64/glue.c
+
+[Sources]
+  glue.c
+  efi_glue.c
+  dlmalloc.c
+  ashrti3.c
+  divti3.c
+  udivmodti4.c
+
+  ../list.c
+  ../glib_compat/garray.c
+  ../glib_compat/glib_compat.c
+  ../glib_compat/glist.c
+  ../glib_compat/grand.c
+  ../glib_compat/gmem.c
+  ../glib_compat/gpattern.c
+  ../glib_compat/gslice.c
+  ../glib_compat/gtestutils.c
+  ../glib_compat/gtree.c
+  ../qemu/util/bitmap.c
+  ../qemu/util/bitops.c
+  ../qemu/util/crc32c.c
+  ../qemu/util/cutils.c
+  ../qemu/util/getauxval.c
+  ../qemu/util/guest-random.c
+  ../qemu/util/host-utils.c
+  ../qemu/util/osdep.c
+  ../qemu/util/oslib-efi.c
+  ../qemu/util/qdist.c
+  ../qemu/util/qemu-timer.c
+  ../qemu/util/qemu-timer-common.c
+  ../qemu/util/range.c
+  ../qemu/util/qht.c
+  ../qemu/util/pagesize.c
+  ../qemu/util/cacheinfo.c
+  ../qemu/crypto/aes.c
+
+  ../uc.c
+  ../qemu/softmmu/vl.c
+  ../qemu/hw/core/cpu.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  unicorn/efi/UnicornPkg.dec
+
+[LibraryClasses]
+  BaseLib
+  DebugLib
+  TimerLib
+  BaseMemoryLib
+  CacheMaintenanceLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  PrintLib
+
+[FeaturePcd]
+
+[Pcd]
+
+[Guids]
+ gEfiDxeServicesTableGuid
+
+[BuildOptions]
+GCC:*_*_*_CC_FLAGS = -nostdinc -I$(MODULE_DIR)/.. -I$(MODULE_DIR)/../include -I$(MODULE_DIR)/../qemu -I$(MODULE_DIR)/../qemu/include -I$(MODULE_DIR)/../qemu/tcg -I$(MODULE_DIR)/../glib_compat -DUNICORN_FOR_EFI -DUNICORN_HAS_X86 -DUNICORN_HAS_ARM -DUNICORN_HAS_ARM64 -DUNICORN_HAS_RISCV -DUNICORN_HAS_MIPS -DUNICORN_HAS_MIPSEL -DUNICORN_HAS_MIPS64 -DUNICORN_HAS_MIPS64EL -DUNICORN_HAS_SPARC -DUNICORN_HAS_M68K -DUNICORN_HAS_PPC -DUNICORN_HAS_S390X -DUNICORN_HAS_TRICORE -DUNICORN_FOR_EFI_INTERNAL
+
+[BuildOptions.AARCH64]
+GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/aarch64
+
+[BuildOptions.RISCV64]
+GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/riscv -I$(MODULE_DIR)/include/riscv

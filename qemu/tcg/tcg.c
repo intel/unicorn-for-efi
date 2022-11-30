@@ -533,7 +533,9 @@ void tcg_region_init(TCGContext *tcg_ctx)
 
         tcg_region_bounds(tcg_ctx, i, &start, &end);
 
+#if !defined(UNICORN_FOR_EFI)
         (void)qemu_mprotect_none(end, page_size);
+#endif /* UNICORN_FOR_EFI */
     }
 
     tcg_ctx->tree = g_tree_new(tb_tc_cmp);
