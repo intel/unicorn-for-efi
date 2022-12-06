@@ -29,6 +29,12 @@
 typedef struct AddrRange AddrRange;
 
 /*
+ * An unmap of a giant (e.g. 48-bit) range will end up calling
+ * tlb_flush_page for every page. Over some size, just flush everything.
+ */
+#define MAX_UNMAP_LEN_TO_INDIVIDUALLY_FLUSH (1024 * 1024)
+
+/*
  * Note that signed integers are needed for negative offsetting in aliases
  * (large MemoryRegion::alias_offset).
  */
@@ -156,8 +162,12 @@ void memory_unmap(struct uc_struct *uc, MemoryRegion *mr)
     // Make sure all pages associated with the MemoryRegion are flushed
     // Only need to do this if we are in a running state
     if (uc->cpu) {
-        for (addr = mr->addr; addr < mr->end; addr += uc->target_page_size) {
-           tlb_flush_page(uc->cpu, addr);
+        if ((mr->end - mr->addr) > MAX_UNMAP_LEN_TO_INDIVIDUALLY_FLUSH) {
+            tlb_flush(uc->cpu);
+        } else {
+            for (addr = mr->addr; addr < mr->end; addr += uc->target_page_size) {
+                tlb_flush_page(uc->cpu, addr);
+            }
         }
     }
     memory_region_del_subregion(uc->system_memory, mr);
