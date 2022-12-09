@@ -1492,10 +1492,10 @@ static int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr)
 {
     unsigned access_size_max = mr->ops->valid.max_access_size;
 
-    /* Regions are assumed to support 1-4 byte accesses unless
+    /* Regions are assumed to support 1-8 byte accesses unless
        otherwise specified.  */
     if (access_size_max == 0) {
-        access_size_max = 4;
+        access_size_max = 8;
     }
 
     /* Bound the maximum access by the alignment of the address.  */

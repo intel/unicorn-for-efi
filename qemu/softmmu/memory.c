@@ -535,7 +535,7 @@ static MemTxResult access_with_adjusted_size(struct uc_struct *uc, hwaddr addr,
         access_size_min = 1;
     }
     if (!access_size_max) {
-        access_size_max = 4;
+        access_size_max = 8;
     }
 
     /* FIXME: support unaligned access? */
