@@ -192,6 +192,7 @@ typedef enum uc_err {
     UC_ERR_HOOK_EXIST,      // hook for this event already existed
     UC_ERR_RESOURCE,        // Insufficient resource: uc_emu_start()
     UC_ERR_EXCEPTION,       // Unhandled CPU exception
+    UC_ERR_FIND_TB,         // Find tb hook returned TRUE
 } uc_err;
 
 /*
@@ -271,6 +272,15 @@ typedef void (*uc_hook_tcg_op_2)(uc_engine *uc, uint64_t address, uint64_t arg1,
                                  uint64_t arg2, uint32_t size, void *user_data);
 
 typedef uc_hook_tcg_op_2 uc_hook_tcg_sub_t;
+
+/*
+  Callback function on tb_find failure.
+
+  @pc: PC for the tb_find failure.
+  @return: true if execution should stop with UC_ERR_FIND_TB.
+*/
+typedef bool (*uc_hook_tb_find_failure_t)(uc_engine *uc, uint64_t pc,
+					  void *user_data);
 
 /*
   Callback function for MMIO read
@@ -369,6 +379,8 @@ typedef enum uc_hook_type {
     // Hook on specific tcg op code. The usage of this hook is similar to
     // UC_HOOK_INSN.
     UC_HOOK_TCG_OPCODE = 1 << 16,
+    // Hook before new edge generation.
+    UC_HOOK_TB_FIND_FAILURE = 1 << 17,
 } uc_hook_type;
 
 // Hook type for all events of unmapped memory access

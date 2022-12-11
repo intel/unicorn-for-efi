@@ -202,7 +202,7 @@ typedef enum uc_hook_idx {
     UC_HOOK_INSN_INVALID_IDX,
     UC_HOOK_EDGE_GENERATED_IDX,
     UC_HOOK_TCG_OPCODE_IDX,
-
+    UC_HOOK_TB_FIND_FAILURE_IDX,
     UC_HOOK_MAX,
 } uc_hook_idx;
 

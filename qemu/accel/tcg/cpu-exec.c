@@ -255,6 +255,19 @@ static inline TranslationBlock *tb_find(CPUState *cpu,
 
     tb = tb_lookup__cpu_state(cpu, &pc, &cs_base, &flags, cf_mask);
     if (tb == NULL) {
+        for (cur = uc->hook[UC_HOOK_TB_FIND_FAILURE_IDX].head;
+             cur != NULL && (hook = (struct hook *)cur->data); cur = cur->next) {
+            if (hook->to_delete) {
+                continue;
+            }
+
+            if (HOOK_BOUND_CHECK(hook, (uint64_t)pc)) {
+                if (((uc_hook_tb_find_failure_t)hook->callback)(uc, pc, hook->user_data)) {
+                    return NULL;
+                }
+            }
+        }
+
         mmap_lock();
         tb = tb_gen_code(cpu, pc, cs_base, flags, cf_mask);
         mmap_unlock();
@@ -598,6 +611,12 @@ int cpu_exec(struct uc_struct *uc, CPUState *cpu)
             }
 
             tb = tb_find(cpu, last_tb, tb_exit, cflags);
+            if (tb == NULL) {
+                uc->invalid_error = UC_ERR_FIND_TB;
+                cpu->halted = 1;
+                ret = EXCP_HLT;
+                break;
+            }
             if (unlikely(cpu->exit_request)) {
                 continue;
             }
@@ -605,6 +624,10 @@ int cpu_exec(struct uc_struct *uc, CPUState *cpu)
             /* Try to align the host and virtual clocks
                if the guest is in advance */
             // align_clocks(&sc, cpu);
+        }
+
+        if (uc->invalid_error == UC_ERR_FIND_TB) {
+            break;
         }
     }
 

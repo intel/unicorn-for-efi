@@ -136,6 +136,8 @@ const char *uc_strerror(uc_err code)
         return "Insufficient resource (UC_ERR_RESOURCE)";
     case UC_ERR_EXCEPTION:
         return "Unhandled CPU exception (UC_ERR_EXCEPTION)";
+    case UC_ERR_FIND_TB:
+        return "TB not found hook (UC_ERR_FIND_TB)";
     }
 }
 
