@@ -1247,6 +1247,7 @@
 #define page_collection_unlock page_collection_unlock_ppc
 #define free_code_gen_buffer free_code_gen_buffer_ppc
 #define tcg_exec_init tcg_exec_init_ppc
+#define tcg_set_native_thunks tcg_set_native_thunks_ppc
 #define tb_cleanup tb_cleanup_ppc
 #define tb_flush tb_flush_ppc
 #define tb_phys_invalidate tb_phys_invalidate_ppc
@@ -1716,4 +1717,5 @@
 #define gen_helper_store_booke_tcr gen_helper_store_booke_tcr_ppc
 #define store_booke_tcr store_booke_tcr_ppc
 #define ppc_hash32_get_phys_page_debug ppc_hash32_get_phys_page_debug_ppc
+#define helper_native_thunk helper_native_thunk_ppc
 #endif

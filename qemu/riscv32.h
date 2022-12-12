@@ -1247,6 +1247,7 @@
 #define page_collection_unlock page_collection_unlock_riscv32
 #define free_code_gen_buffer free_code_gen_buffer_riscv32
 #define tcg_exec_init tcg_exec_init_riscv32
+#define tcg_set_native_thunks tcg_set_native_thunks_riscv32
 #define tb_cleanup tb_cleanup_riscv32
 #define tb_flush tb_flush_riscv32
 #define tb_phys_invalidate tb_phys_invalidate_riscv32
@@ -1374,4 +1375,5 @@
 #define gen_helper_tlb_flush gen_helper_tlb_flush_riscv32
 #define riscv_fpr_regnames riscv_fpr_regnames_riscv32
 #define riscv_int_regnames riscv_int_regnames_riscv32
+#define helper_native_thunk helper_native_thunk_riscv32
 #endif

@@ -1123,6 +1123,18 @@ void tcg_exec_init(struct uc_struct *uc, unsigned long tb_size)
     uc->del_inline_hook = uc_del_inline_hook;
 }
 
+uc_err tcg_set_native_thunks(uc_engine *uc,
+                             uc_cb_is_native_t is_native,
+                             uc_cb_call_native_t call_native)
+{
+#ifndef TARGET_SUPPORTS_NATIVE_THUNKS
+    return UC_ERR_ARG;
+#endif
+    uc->is_native = is_native;
+    uc->call_native = call_native;
+    return UC_ERR_OK;
+}
+
 /* call with @p->lock held */
 static inline void invalidate_page_bitmap(PageDesc *p)
 {
@@ -1603,6 +1615,10 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
     if (phys_pc == -1) {
         /* Generate a temporary TB; do not cache */
         cflags |= CF_NOCACHE;
+    }
+
+    if (uc_addr_is_native(cpu->uc, pc)) {
+        cflags |= CF_THUNK;
     }
 
     cflags &= ~CF_CLUSTER_MASK;

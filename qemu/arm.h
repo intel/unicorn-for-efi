@@ -1247,6 +1247,7 @@
 #define page_collection_unlock page_collection_unlock_arm
 #define free_code_gen_buffer free_code_gen_buffer_arm
 #define tcg_exec_init tcg_exec_init_arm
+#define tcg_set_native_thunks tcg_set_native_thunks_arm
 #define tb_cleanup tb_cleanup_arm
 #define tb_flush tb_flush_arm
 #define tb_phys_invalidate tb_phys_invalidate_arm
@@ -1985,4 +1986,5 @@
 #define sri_op sri_op_arm
 #define usra_op usra_op_arm
 #define ssra_op ssra_op_arm
+#define helper_native_thunk helper_native_thunk_arm
 #endif

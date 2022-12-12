@@ -283,6 +283,21 @@ typedef bool (*uc_hook_tb_find_failure_t)(uc_engine *uc, uint64_t pc,
 					  void *user_data);
 
 /*
+  Callback function for native call identification.
+
+  @pc: PC to check.
+  @return: true if PC is a native call address.
+*/
+typedef bool (*uc_cb_is_native_t)(uc_engine *uc, uint64_t pc);
+
+/*
+  Callback function for native call.
+
+  @pc: PC to invoke.
+*/
+typedef void (*uc_cb_call_native_t)(uc_engine *uc, uint64_t pc);
+
+/*
   Callback function for MMIO read
 
   @offset: offset to the base address of the IO memory.
@@ -624,6 +639,7 @@ See sample_ctl.c for a detailed example.
 #define uc_ctl_request_cache(uc, address, tb)                                  \
     uc_ctl(uc, UC_CTL_READ_WRITE(UC_CTL_TB_REQUEST_CACHE, 2), (address), (tb))
 #define uc_ctl_flush_tlb(uc) uc_ctl(uc, UC_CTL_WRITE(UC_CTL_TB_FLUSH, 0))
+
 // Opaque storage for CPU context, used with uc_context_*()
 struct uc_context;
 typedef struct uc_context uc_context;
@@ -1175,6 +1191,21 @@ size_t uc_context_size(uc_engine *uc);
 */
 UNICORN_EXPORT
 uc_err uc_context_free(uc_context *context);
+
+/*
+  Set the native thunk support callbacks.
+
+  @uc: handle returned by uc_open()
+  @is_native: uc_cb_is_native_t
+  @call_native: uc_cb_call_native_t
+
+  @return UC_ERR_OK on success, or other value on failure (refer to uc_err enum
+   for detailed error).
+*/
+UNICORN_EXPORT
+uc_err uc_set_native_thunks(uc_engine *uc,
+                            uc_cb_is_native_t is_native,
+                            uc_cb_call_native_t call_native);
 
 #ifdef __cplusplus
 }

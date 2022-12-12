@@ -164,3 +164,13 @@ void HELPER(exit_atomic)(CPUArchState *env)
 {
     cpu_loop_exit_atomic(env_cpu(env), GETPC());
 }
+
+void HELPER(native_thunk)(CPUArchState *env, uint64_t pc)
+{
+    CPUState *cpu = env_cpu(env);
+    struct uc_struct *uc = (struct uc_struct *)cpu->uc;
+
+    if (uc->call_native != NULL) {
+        uc->call_native(uc, pc);
+    }
+}

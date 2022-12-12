@@ -1247,6 +1247,7 @@
 #define page_collection_unlock page_collection_unlock_sparc64
 #define free_code_gen_buffer free_code_gen_buffer_sparc64
 #define tcg_exec_init tcg_exec_init_sparc64
+#define tcg_set_native_thunks tcg_set_native_thunks_sparc64
 #define tb_cleanup tb_cleanup_sparc64
 #define tb_flush tb_flush_sparc64
 #define tb_phys_invalidate tb_phys_invalidate_sparc64
@@ -1417,4 +1418,5 @@
 #define sparc_reg_reset sparc_reg_reset_sparc64
 #define sparc_reg_read sparc_reg_read_sparc64
 #define sparc_reg_write sparc_reg_write_sparc64
+#define helper_native_thunk helper_native_thunk_sparc64
 #endif

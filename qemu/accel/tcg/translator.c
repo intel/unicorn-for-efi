@@ -69,6 +69,18 @@ void translator_loop(const TranslatorOps *ops, DisasContextBase *db,
         goto _end_loop;
     }
 
+    if (tb_cflags(tb) & CF_THUNK) {
+        gen_tb_start(tcg_ctx, db->tb);
+        ops->tb_start(db, cpu);
+        db->num_insns++;
+        ops->insn_start(db, cpu);
+        /*
+         * Will create the thunk.
+         */
+        ops->translate_insn(db, cpu);
+        goto _end_loop;
+    }
+
     /* Unicorn: trace this block on request
      * Only hook this block if it is not broken from previous translation due to
      * full translation cache

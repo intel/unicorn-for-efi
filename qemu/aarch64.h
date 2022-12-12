@@ -1247,6 +1247,7 @@
 #define page_collection_unlock page_collection_unlock_aarch64
 #define free_code_gen_buffer free_code_gen_buffer_aarch64
 #define tcg_exec_init tcg_exec_init_aarch64
+#define tcg_set_native_thunks tcg_set_native_thunks_aarch64
 #define tb_cleanup tb_cleanup_aarch64
 #define tb_flush tb_flush_aarch64
 #define tb_phys_invalidate tb_phys_invalidate_aarch64
@@ -2977,4 +2978,5 @@
 #define aarch64_translator_ops aarch64_translator_ops_aarch64
 #define pred_esz_masks pred_esz_masks_aarch64
 #define helper_uc_hooksys64 helper_uc_hooksys64_aarch64
+#define helper_native_thunk helper_native_thunk_aarch64
 #endif

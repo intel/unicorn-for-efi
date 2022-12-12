@@ -1247,6 +1247,7 @@
 #define page_collection_unlock page_collection_unlock_s390x
 #define free_code_gen_buffer free_code_gen_buffer_s390x
 #define tcg_exec_init tcg_exec_init_s390x
+#define tcg_set_native_thunks tcg_set_native_thunks_s390x
 #define tb_cleanup tb_cleanup_s390x
 #define tb_flush tb_flush_s390x
 #define tb_phys_invalidate tb_phys_invalidate_s390x
@@ -1281,4 +1282,5 @@
 #define tcg_s390_tod_updated tcg_s390_tod_updated_s390x
 #define tcg_s390_program_interrupt tcg_s390_program_interrupt_s390x
 #define tcg_s390_data_exception tcg_s390_data_exception_s390x
+#define helper_native_thunk helper_native_thunk_s390x
 #endif

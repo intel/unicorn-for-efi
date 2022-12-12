@@ -1247,6 +1247,7 @@
 #define page_collection_unlock page_collection_unlock_tricore
 #define free_code_gen_buffer free_code_gen_buffer_tricore
 #define tcg_exec_init tcg_exec_init_tricore
+#define tcg_set_native_thunks tcg_set_native_thunks_tricore
 #define tb_cleanup tb_cleanup_tricore
 #define tb_flush tb_flush_tricore
 #define tb_phys_invalidate tb_phys_invalidate_tricore
@@ -1287,4 +1288,5 @@
 #define gen_intermediate_code gen_intermediate_code_tricore
 #define restore_state_to_opc restore_state_to_opc_tricore
 #define helper_uc_tricore_exit helper_uc_tricore_exit_tricore
+#define helper_native_thunk helper_native_thunk_tricore
 #endif

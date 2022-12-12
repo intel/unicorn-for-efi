@@ -146,6 +146,10 @@ typedef uc_err (*uc_gen_tb_t)(struct uc_struct *uc, uint64_t pc, uc_tb *out_tb);
 // tb flush
 typedef uc_tcg_flush_tlb uc_tb_flush_t;
 
+typedef uc_err (*uc_set_native_thunks_t)(uc_engine *uc,
+                                         uc_cb_is_native_t is_native,
+                                         uc_cb_call_native_t call_native);
+
 struct hook {
     int type;       // UC_HOOK_*
     int insn;       // instruction for HOOK_INSN
@@ -280,6 +284,7 @@ struct uc_struct {
     uc_args_uc_t init_arch, cpu_exec_init_all;
     uc_args_int_uc_t vm_start;
     uc_args_uc_long_t tcg_exec_init;
+    uc_set_native_thunks_t tcg_set_native_thunks;
     uc_args_uc_ram_size_t memory_map;
     uc_args_uc_ram_size_ptr_t memory_map_ptr;
     uc_mem_unmap_t memory_unmap;
@@ -398,6 +403,8 @@ struct uc_struct {
     struct TranslationBlock *last_tb; // The real last tb we executed.
 
     FlatView *empty_view; // Static function variable moved from flatviews_init
+    uc_cb_is_native_t is_native;
+    uc_cb_call_native_t call_native;
 };
 
 // Metadata stub for the variable-size cpu context used with uc_context_*()
@@ -417,6 +424,15 @@ static inline void uc_add_exit(uc_engine *uc, uint64_t addr)
     uint64_t *new_exit = g_malloc(sizeof(uint64_t));
     *new_exit = addr;
     g_tree_insert(uc->ctl_exits, (gpointer)new_exit, (gpointer)1);
+}
+
+static inline int uc_addr_is_native(uc_engine *uc, uint64_t addr)
+{
+    if (uc->is_native != NULL) {
+        return uc->is_native(uc, addr);
+    }
+
+    return 0;
 }
 
 // This function has to exist since we would like to accept uint32_t or

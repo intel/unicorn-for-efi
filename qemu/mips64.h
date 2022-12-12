@@ -1247,6 +1247,7 @@
 #define page_collection_unlock page_collection_unlock_mips64
 #define free_code_gen_buffer free_code_gen_buffer_mips64
 #define tcg_exec_init tcg_exec_init_mips64
+#define tcg_set_native_thunks tcg_set_native_thunks_mips64
 #define tb_cleanup tb_cleanup_mips64
 #define tb_flush tb_flush_mips64
 #define tb_phys_invalidate tb_phys_invalidate_mips64
@@ -2392,4 +2393,5 @@
 #define mips_defs_number mips_defs_number_mips64
 #define gen_helper_float_class_s gen_helper_float_class_s_mips64
 #define gen_helper_float_class_d gen_helper_float_class_d_mips64
+#define helper_native_thunk helper_native_thunk_mips64
 #endif

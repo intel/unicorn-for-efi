@@ -8,12 +8,12 @@
 #ifndef SYSEMU_TCG_H
 #define SYSEMU_TCG_H
 
-#include <stdbool.h>
-
-//#include "uc_priv.h"
-
-struct uc_struct;
+#include "uc_priv.h"
 
 void tcg_exec_init(struct uc_struct *uc, unsigned long tb_size);
+
+uc_err tcg_set_native_thunks(uc_engine *uc,
+                             uc_cb_is_native_t is_native,
+                             uc_cb_call_native_t call_native);
 
 #endif

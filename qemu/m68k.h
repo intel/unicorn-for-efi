@@ -1247,6 +1247,7 @@
 #define page_collection_unlock page_collection_unlock_m68k
 #define free_code_gen_buffer free_code_gen_buffer_m68k
 #define tcg_exec_init tcg_exec_init_m68k
+#define tcg_set_native_thunks tcg_set_native_thunks_m68k
 #define tb_cleanup tb_cleanup_m68k
 #define tb_flush tb_flush_m68k
 #define tb_phys_invalidate tb_phys_invalidate_m68k
@@ -1435,4 +1436,5 @@
 #define m68k_reg_reset m68k_reg_reset_m68k
 #define m68k_reg_read m68k_reg_read_m68k
 #define m68k_reg_write m68k_reg_write_m68k
+#define helper_native_thunk helper_native_thunk_m68k
 #endif

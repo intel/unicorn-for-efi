@@ -34,6 +34,8 @@
    close to the modifying instruction */
 #define TARGET_HAS_PRECISE_SMC
 
+#define TARGET_SUPPORTS_NATIVE_THUNKS
+
 #ifdef TARGET_X86_64
 #define I386_ELF_MACHINE  EM_X86_64
 #define ELF_MACHINE_UNAME "x86_64"

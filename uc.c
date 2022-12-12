@@ -2442,3 +2442,13 @@ void trace_end(uc_tracer *tracer, trace_loc loc, const char *fmt, ...)
             (double)(end - tracer->starts[loc]) / (double)(1000));
 }
 #endif
+
+UNICORN_EXPORT
+uc_err
+uc_set_native_thunks(uc_engine *uc,
+                     uc_cb_is_native_t is_native,
+                     uc_cb_call_native_t call_native)
+{
+    return uc->tcg_set_native_thunks(uc, is_native, call_native);
+}
+

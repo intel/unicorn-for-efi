@@ -4807,6 +4807,24 @@ static target_ulong disas_insn(DisasContext *s, CPUState *cpu)
         return s->pc;
     }
 
+    if (tb_cflags(s->base.tb) & CF_THUNK) {
+        /*
+         * Thunk call to pc_start.
+         */
+        gen_helper_native_thunk(tcg_ctx, tcg_ctx->cpu_env,
+                                tcg_const_i64(tcg_ctx, pc_start));
+        /*
+         * Imitate 0xc3 ret.
+         */
+        ot = gen_pop_T0(s);
+        gen_pop_update(s, ot);
+        /* Note that gen_pop_T0 uses a zero-extending load.  */
+        gen_op_jmp_v(tcg_ctx, s->T0);
+        gen_bnd_jmp(s);
+        gen_jr(s, s->T0);
+        return s->pc;
+    }
+
     // Unicorn: callback might need to access to EFLAGS,
     // or want to stop emulation immediately
     if (HOOK_EXISTS_BOUNDED(env->uc, UC_HOOK_CODE, pc_start)) {
