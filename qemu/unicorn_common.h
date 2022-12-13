@@ -99,6 +99,7 @@ static inline void uc_common_init(struct uc_struct* uc)
     uc->read_mem = cpu_physical_mem_read;
     uc->tcg_exec_init = tcg_exec_init;
     uc->tcg_set_native_thunks = tcg_set_native_thunks;
+    uc->tcg_get_code_gen_buf = tcg_get_code_gen_buf;
     uc->cpu_exec_init_all = cpu_exec_init_all;
     uc->vm_start = vm_start;
     uc->memory_map = memory_map;

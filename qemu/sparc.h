@@ -1249,6 +1249,7 @@
 #define free_code_gen_buffer free_code_gen_buffer_sparc
 #define tcg_exec_init tcg_exec_init_sparc
 #define tcg_set_native_thunks tcg_set_native_thunks_sparc
+#define tcg_get_code_gen_buf tcg_get_code_gen_buf_sparc
 #define tb_cleanup tb_cleanup_sparc
 #define tb_flush tb_flush_sparc
 #define tb_phys_invalidate tb_phys_invalidate_sparc

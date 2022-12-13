@@ -2452,3 +2452,11 @@ uc_set_native_thunks(uc_engine *uc,
     return uc->tcg_set_native_thunks(uc, is_native, call_native);
 }
 
+UNICORN_EXPORT
+uc_err uc_get_code_gen_buf(uc_engine *uc,
+                           void **code_gen_buf,
+                           size_t *code_gen_size)
+{
+    uc->tcg_get_code_gen_buf(uc, code_gen_buf, code_gen_size);
+    return UC_ERR_OK;
+}

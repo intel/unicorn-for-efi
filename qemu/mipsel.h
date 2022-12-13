@@ -1249,6 +1249,7 @@
 #define free_code_gen_buffer free_code_gen_buffer_mipsel
 #define tcg_exec_init tcg_exec_init_mipsel
 #define tcg_set_native_thunks tcg_set_native_thunks_mipsel
+#define tcg_get_code_gen_buf tcg_get_code_gen_buf_mipsel
 #define tb_cleanup tb_cleanup_mipsel
 #define tb_flush tb_flush_mipsel
 #define tb_phys_invalidate tb_phys_invalidate_mipsel

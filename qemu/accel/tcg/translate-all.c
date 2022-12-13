@@ -1135,6 +1135,14 @@ uc_err tcg_set_native_thunks(uc_engine *uc,
     return UC_ERR_OK;
 }
 
+void tcg_get_code_gen_buf(uc_engine *uc,
+                          void **code_gen_buf,
+                          size_t *code_gen_size)
+{
+    *code_gen_buf = uc->tcg_ctx->code_gen_buffer;
+    *code_gen_size = uc->tcg_ctx->code_gen_buffer_size;
+}
+
 /* call with @p->lock held */
 static inline void invalidate_page_bitmap(PageDesc *p)
 {

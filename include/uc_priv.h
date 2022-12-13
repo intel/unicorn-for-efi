@@ -150,6 +150,10 @@ typedef uc_err (*uc_set_native_thunks_t)(uc_engine *uc,
                                          uc_cb_is_native_t is_native,
                                          uc_cb_call_native_t call_native);
 
+typedef void (*uc_tcg_get_code_gen_buf_t)(struct uc_struct *uc,
+                                          void **code_gen_buf,
+                                          size_t *code_gen_size);
+
 struct hook {
     int type;       // UC_HOOK_*
     int insn;       // instruction for HOOK_INSN
@@ -285,6 +289,7 @@ struct uc_struct {
     uc_args_int_uc_t vm_start;
     uc_args_uc_long_t tcg_exec_init;
     uc_set_native_thunks_t tcg_set_native_thunks;
+    uc_tcg_get_code_gen_buf_t tcg_get_code_gen_buf;
     uc_args_uc_ram_size_t memory_map;
     uc_args_uc_ram_size_ptr_t memory_map_ptr;
     uc_mem_unmap_t memory_unmap;

@@ -1207,6 +1207,21 @@ uc_err uc_set_native_thunks(uc_engine *uc,
                             uc_cb_is_native_t is_native,
                             uc_cb_call_native_t call_native);
 
+/*
+  Return the code gen buffer base and size.
+
+  @uc: handle returned by uc_open()
+  @code_gen_buf: location where to store the code gen buffer pointer
+  @code_gen_size: location where to store the code gen buffer size
+
+  @return UC_ERR_OK on success, or other value on failure (refer to uc_err enum
+   for detailed error).
+*/
+UNICORN_EXPORT
+uc_err uc_get_code_gen_buf(uc_engine *uc,
+                           void **code_gen_buf,
+                           size_t *code_gen_size);
+
 #ifdef __cplusplus
 }
 #endif
