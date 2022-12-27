@@ -1010,31 +1010,46 @@ static void uc_invalidate_tb(struct uc_struct *uc, uint64_t start_addr, size_t l
 {
     tb_page_addr_t start, end;
 
-    uc->nested_level++;
-    if (sigsetjmp(uc->jmp_bufs[uc->nested_level - 1], 0) != 0) {
-        // We a get cpu fault in get_page_addr_code, ignore it.
+    do {
+        /*
+         * An optimization here would be to become aware of underlying memory block
+         * organization, instead of having to iterate page by page.
+         */
+        uc->nested_level++;
+        if (sigsetjmp(uc->jmp_bufs[uc->nested_level - 1], 0) != 0) {
+          uint64_t new_start_addr;
+
+          // We a get cpu fault in get_page_addr_code, ignore it and move to
+          // the next possible page.
+          uc->nested_level--;
+          new_start_addr = (start_addr & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE;
+          len -= MIN(len, new_start_addr - start_addr);
+          start_addr = new_start_addr;
+          continue;
+        }
+
+        // GPA to GVA
+        // start_addr : GPA
+        // addr: GVA
+        // (GPA -> HVA via memory_region_get_ram_addr(mr) + GPA + block->host,
+        // HVA->HPA via host mmu)
+        start = get_page_addr_code(uc->cpu->env_ptr, start_addr) & (target_ulong)(-1);
+
         uc->nested_level--;
-        return;
-    }
 
-    // GPA to GVA
-    // start_addr : GPA
-    // addr: GVA
-    // (GPA -> HVA via memory_region_get_ram_addr(mr) + GPA + block->host,
-    // HVA->HPA via host mmu)
-    start = get_page_addr_code(uc->cpu->env_ptr, start_addr) & (target_ulong)(-1);
+        // For 32bit target.
+        end = ((start & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE) &
+            (target_ulong)(-1);
 
-    uc->nested_level--;
+        // We get a wrap?
+        if (start > end) {
+            return;
+        }
 
-    // For 32bit target.
-    end = (start + len) & (target_ulong)(-1);
-
-    // We get a wrap?
-    if (start > end) {
-        return;
-    }
-
-    tb_invalidate_phys_range(uc, start, end);
+        tb_invalidate_phys_range(uc, start, end);
+        len -= MIN(len, end - start);
+        start_addr = (start_addr & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE;
+    } while (len != 0);
 }
 
 static uc_err uc_gen_tb(struct uc_struct *uc, uint64_t addr, uc_tb *out_tb) 
