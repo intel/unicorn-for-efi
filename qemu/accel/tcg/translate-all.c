@@ -753,8 +753,12 @@ static void page_lock_pair(struct uc_struct *uc, PageDesc **ret_p1, tb_page_addr
    indicated, this is constrained by the range of direct branches on the
    host cpu, as used by the TCG implementation of goto_tb.  */
 
-#if defined(UNICORN_FOR_EFI) && defined(UNICORN_FOR_EFI_MAX_TB_SIZE)
+#if defined(UNICORN_FOR_EFI)
+#if defined(UNICORN_FOR_EFI_MAX_TB_SIZE)
 # define MAX_CODE_GEN_BUFFER_SIZE  UNICORN_FOR_EFI_MAX_TB_SIZE
+#else
+# define MAX_CODE_GEN_BUFFER_SIZE  (100 * MiB)
+#endif
 #elif defined(__x86_64__)
 # define MAX_CODE_GEN_BUFFER_SIZE  (2 * GiB)
 #elif defined(__sparc__)
