@@ -752,11 +752,12 @@ uc_err uc_emu_start(uc_engine *uc, uint64_t begin, uint64_t until,
 
     // Advance the nested levels. We must decrease the level count by one when
     // we return from uc_emu_start.
-    if (uc->nested_level >= UC_MAX_NESTED_LEVEL) {
+
+    if (uc->shared.nested_level >= UC_MAX_NESTED_LEVEL) {
         // We can't support so many nested levels.
         return UC_ERR_RESOURCE;
     }
-    uc->nested_level++;
+    uc->shared.nested_level++;
 
     uint32_t begin_pc32 = READ_DWORD(begin);
     switch (uc->arch) {
@@ -866,7 +867,7 @@ uc_err uc_emu_start(uc_engine *uc, uint64_t begin, uint64_t until,
         // restore to append mode for uc_hook_add()
         uc->hook_insert = 0;
         if (err != UC_ERR_OK) {
-            uc->nested_level--;
+            uc->shared.nested_level--;
             return err;
         }
     }
@@ -874,7 +875,7 @@ uc_err uc_emu_start(uc_engine *uc, uint64_t begin, uint64_t until,
     // If UC_CTL_UC_USE_EXITS is set, then the @until param won't have any
     // effect. This is designed for the backward compatibility.
     if (!uc->use_exits) {
-        uc->exits[uc->nested_level - 1] = until;
+        uc->exits[uc->shared.nested_level - 1] = until;
     }
 
     if (timeout) {
@@ -887,11 +888,11 @@ uc_err uc_emu_start(uc_engine *uc, uint64_t begin, uint64_t until,
 
     uc->vm_start(uc);
 
-    uc->nested_level--;
+    uc->shared.nested_level--;
 
     // emulation is done if and only if we exit the outer uc_emu_start
     // or we may lost uc_emu_stop
-    if (uc->nested_level == 0) {
+    if (uc->shared.nested_level == 0) {
         uc->emulation_done = true;
 
         // remove hooks to delete
@@ -2460,3 +2461,15 @@ uc_err uc_get_code_gen_buf(uc_engine *uc,
     uc->tcg_get_code_gen_buf(uc, code_gen_buf, code_gen_size);
     return UC_ERR_OK;
 }
+
+UNICORN_EXPORT
+uc_err uc_get_shared(uc_engine *uc,
+                     uc_shared **shared)
+{
+    assert(uc != NULL);
+    assert(shared != NULL);
+
+    *shared = &uc->shared;
+    return UC_ERR_OK;
+}
+

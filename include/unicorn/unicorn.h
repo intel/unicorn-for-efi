@@ -195,6 +195,10 @@ typedef enum uc_err {
     UC_ERR_FIND_TB,         // Find tb hook returned TRUE
 } uc_err;
 
+typedef struct uc_shared {
+    int nested_level;       // Current nested_level.
+} uc_shared;
+
 /*
   Callback function for tracing code (UC_HOOK_CODE & UC_HOOK_BLOCK)
 
@@ -1221,6 +1225,9 @@ UNICORN_EXPORT
 uc_err uc_get_code_gen_buf(uc_engine *uc,
                            void **code_gen_buf,
                            size_t *code_gen_size);
+
+UNICORN_EXPORT
+uc_err uc_get_shared(uc_engine *uc, uc_shared **shared);
 
 #ifdef __cplusplus
 }

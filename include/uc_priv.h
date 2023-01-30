@@ -403,7 +403,7 @@ struct uc_struct {
     bool init_done;       // Whether the initialization is done.
 
     sigjmp_buf jmp_bufs[UC_MAX_NESTED_LEVEL]; // To support nested uc_emu_start
-    int nested_level;                         // Current nested_level
+    uc_shared shared;
 
     struct TranslationBlock *last_tb; // The real last tb we executed.
 
@@ -447,7 +447,7 @@ static inline int uc_addr_is_exit(uc_engine *uc, uint64_t addr)
     if (uc->use_exits) {
         return g_tree_lookup(uc->ctl_exits, (gpointer)(&addr)) == (gpointer)1;
     } else {
-        return uc->exits[uc->nested_level - 1] == addr;
+        return uc->exits[uc->shared.nested_level - 1] == addr;
     }
 }
 

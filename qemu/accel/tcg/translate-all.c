@@ -1019,13 +1019,13 @@ static void uc_invalidate_tb(struct uc_struct *uc, uint64_t start_addr, size_t l
          * An optimization here would be to become aware of underlying memory block
          * organization, instead of having to iterate page by page.
          */
-        uc->nested_level++;
-        if (sigsetjmp(uc->jmp_bufs[uc->nested_level - 1], 0) != 0) {
+        uc->shared.nested_level++;
+        if (sigsetjmp(uc->jmp_bufs[uc->shared.nested_level - 1], 0) != 0) {
           uint64_t new_start_addr;
 
           // We a get cpu fault in get_page_addr_code, ignore it and move to
           // the next possible page.
-          uc->nested_level--;
+          uc->shared.nested_level--;
           new_start_addr = (start_addr & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE;
           len -= MIN(len, new_start_addr - start_addr);
           start_addr = new_start_addr;
@@ -1039,7 +1039,7 @@ static void uc_invalidate_tb(struct uc_struct *uc, uint64_t start_addr, size_t l
         // HVA->HPA via host mmu)
         start = get_page_addr_code(uc->cpu->env_ptr, start_addr) & (target_ulong)(-1);
 
-        uc->nested_level--;
+        uc->shared.nested_level--;
 
         // For 32bit target.
         end = ((start & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE) &
