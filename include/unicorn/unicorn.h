@@ -879,8 +879,9 @@ UNICORN_EXPORT
 uc_err uc_emu_stop(uc_engine *uc);
 
 /*
- Register callback for a hook event.
- The callback will be run when the hook event is hit.
+ Register callback for a hook event, appending the callback at the end
+ of the list of regstered callbacks. The callback will be run when the hook event
+ is hit.
 
  @uc: handle returned by uc_open()
  @hh: hook handle returned from this registration. To be used in uc_hook_del()
@@ -906,6 +907,36 @@ uc_err uc_emu_stop(uc_engine *uc);
 UNICORN_EXPORT
 uc_err uc_hook_add(uc_engine *uc, uc_hook *hh, int type, void *callback,
                    void *user_data, uint64_t begin, uint64_t end, ...);
+
+/*
+ Register callback for a hook event, appending the callback at the beginning
+ of the list of regstered callbacks. The callback will be run when the hook event
+ is hit.
+
+ @uc: handle returned by uc_open()
+ @hh: hook handle returned from this registration. To be used in uc_hook_del()
+ API
+ @type: hook type, refer to uc_hook_type enum
+ @callback: callback to be run when instruction is hit
+ @user_data: user-defined data. This will be passed to callback function in its
+      last argument @user_data
+ @begin: start address of the area where the callback is in effect (inclusive)
+ @end: end address of the area where the callback is in effect (inclusive)
+   NOTE 1: the callback is called only if related address is in range [@begin,
+ @end] NOTE 2: if @begin > @end, callback is called whenever this hook type is
+ triggered
+ @...: variable arguments (depending on @type)
+   NOTE: if @type = UC_HOOK_INSN, this is the instruction ID.
+         currently, only x86 in, out, syscall, sysenter, cpuid are supported.
+   NOTE: if @type = UC_HOOK_TCG_OPCODE, arguments are @opcode and @flags. See
+ @uc_tcg_op_code and @uc_tcg_op_flag for details.
+
+ @return UC_ERR_OK on success, or other value on failure (refer to uc_err enum
+   for detailed error).
+*/
+UNICORN_EXPORT
+uc_err uc_hook_add_first(uc_engine *uc, uc_hook *hh, int type, void *callback,
+                         void *user_data, uint64_t begin, uint64_t end, ...);
 
 /*
  Unregister (remove) a hook callback.

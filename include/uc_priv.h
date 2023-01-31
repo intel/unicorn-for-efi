@@ -393,8 +393,6 @@ struct uc_struct {
     /* ARCH_REGS_STORAGE_SIZE */
     int cpu_context_size;
     uint64_t next_pc; // save next PC for some special cases
-    bool hook_insert; // insert new hook at begin of the hook list (append by
-                      // default)
     bool no_exit_request; // Disable check_exit_request temporarily. A
                           // workaround to treat the IT block as a whole block.
     bool init_done;       // Whether the initialization is done.
