@@ -327,9 +327,6 @@ struct uc_struct {
     int target_bits; // User defined page bits by uc_ctl
     int cpu_model;
     BounceBuffer bounce;                // qemu/cpu-exec.c
-    /* qemu/accel/tcg/cpu-exec-common.c */
-    /* always be true after call tcg_exec_init(). */
-    bool tcg_allowed;
     /* This is a multi-level map on the virtual address space.
        The bottom level has pointers to PageDesc.  */
     void **l1_map; // qemu/accel/tcg/translate-all.c
