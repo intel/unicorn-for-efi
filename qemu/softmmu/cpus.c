@@ -86,7 +86,7 @@ static int tcg_cpu_exec(struct uc_struct *uc)
     int r;
     bool finish = false;
 
-    while (!uc->exit_request) {
+    while (1) { // was checking dead variable !uc->exit_request
         CPUState *cpu = uc->cpu;
 
         //qemu_clock_enable(QEMU_CLOCK_VIRTUAL,
@@ -133,7 +133,6 @@ static int tcg_cpu_exec(struct uc_struct *uc)
             break;
         }
     }
-    uc->exit_request = 0;
     uc->cpu->exit_request = 0;
     uc->cpu->icount_decr_ptr->u16.high = 0;
     uc->cpu->tcg_exit_req = 0;

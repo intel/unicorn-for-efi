@@ -327,7 +327,6 @@ struct uc_struct {
     int target_bits; // User defined page bits by uc_ctl
     int cpu_model;
     BounceBuffer bounce;                // qemu/cpu-exec.c
-    volatile sig_atomic_t exit_request; // qemu/cpu-exec.c
     /* qemu/accel/tcg/cpu-exec-common.c */
     /* always be true after call tcg_exec_init(). */
     bool tcg_allowed;
