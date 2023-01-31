@@ -746,7 +746,6 @@ uc_err uc_emu_start(uc_engine *uc, uint64_t begin, uint64_t until,
     uc->emulation_done = false;
     uc->size_recur_mem = 0;
     uc->timed_out = false;
-    uc->first_tb = true;
 
     UC_INIT(uc);
 

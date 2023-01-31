@@ -396,8 +396,6 @@ struct uc_struct {
     uint64_t next_pc; // save next PC for some special cases
     bool hook_insert; // insert new hook at begin of the hook list (append by
                       // default)
-    bool first_tb; // is this the first Translation-Block ever generated since
-                   // uc_emu_start()?
     bool no_exit_request; // Disable check_exit_request temporarily. A
                           // workaround to treat the IT block as a whole block.
     bool init_done;       // Whether the initialization is done.
