@@ -696,6 +696,7 @@ static void *_timeout_fn(void *arg)
 
 static void enable_emu_timer(uc_engine *uc, uint64_t timeout)
 {
+    assert (uc->timeout == 0);
     uc->timeout = timeout;
     qemu_thread_create(uc, &uc->timer, "timeout", _timeout_fn, uc,
                        QEMU_THREAD_JOINABLE);
@@ -739,6 +740,16 @@ uc_err uc_emu_start(uc_engine *uc, uint64_t begin, uint64_t until,
                     uint64_t timeout, size_t count)
 {
     uc_err err;
+
+    if (timeout != 0 && uc->timeout != 0) {
+        //
+        // Due to interaction between timeout_fn and emulation_done
+        // uc->timed_out being queryable, timeouts must be global across
+        // all nested invocations of us_emu_start. Consequently, there
+        // can only be one timeout set.
+        //
+        return UC_ERR_ARG;
+    }
 
     // reset the counter
     uc->emu_counter = 0;
