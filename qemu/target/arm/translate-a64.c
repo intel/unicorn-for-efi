@@ -3291,7 +3291,7 @@ static void disas_ldst_atomic(DisasContext *s, uint32_t insn,
     bool r = extract32(insn, 22, 1);
     bool a = extract32(insn, 23, 1);
     TCGv_i64 tcg_rs, clean_addr;
-    AtomicThreeOpFn *fn;
+    AtomicThreeOpFn *fn = NULL;
 
     if (is_vector || !dc_isar_feature(aa64_atomics, s)) {
         unallocated_encoding(s);
@@ -8222,7 +8222,7 @@ static void handle_shri_with_rndacc(TCGContext *tcg_ctx, TCGv_i64 tcg_res, TCGv_
     bool extended_result = false;
     bool round = tcg_rnd != NULL;
     int ext_lshift = 0;
-    TCGv_i64 tcg_src_hi;
+    TCGv_i64 tcg_src_hi = 0;
 
     if (round && size == 3) {
         extended_result = true;
