@@ -1,4 +1,4 @@
-CFLAGS += -L ../../ -I ../../include
+CFLAGS += -L ../../ -I ../../include -g 
 
 UNAME_S := $(shell uname -s)
 LDFLAGS += -pthread
@@ -6,7 +6,7 @@ ifeq ($(UNAME_S), Linux)
 LDFLAGS += -lrt
 endif
 
-LDFLAGS += ../../libunicorn.a
+LDFLAGS += ../../build/libunicorn.a -lm
 
 
 ALL_TESTS_SOURCES = $(wildcard fuzz*.c)
