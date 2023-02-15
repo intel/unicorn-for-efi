@@ -1968,11 +1968,12 @@ uc_err uc_context_reg_read(uc_context *ctx, int regid, void *value)
 static void find_context_reg_rw_function(uc_arch arch, uc_mode mode,
                                          context_reg_rw_t *rw)
 {
+    rw->context_reg_read = NULL;
+    rw->context_reg_write = NULL;
+
     // We believe that the arch/mode pair is correct.
     switch (arch) {
     default:
-        rw->context_reg_read = NULL;
-        rw->context_reg_write = NULL;
         break;
 #ifdef UNICORN_HAS_M68K
     case UC_ARCH_M68K:
