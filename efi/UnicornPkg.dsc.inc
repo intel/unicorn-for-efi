@@ -62,7 +62,7 @@
   CacheMaintenanceLib|ArmPkg/Library/ArmCacheMaintenanceLib/ArmCacheMaintenanceLib.inf
 
 [LibraryClasses.RISCV64]
-  TimerLib|UefiCpuPkg/Library/CpuTimerLib/BaseRiscV64CpuTimerLib.inf
+  TimerLib|UefiCpuPkg/Library/BaseRiscV64CpuTimerLib/BaseRiscV64CpuTimerLib.inf
   CacheMaintenanceLib|MdePkg/Library/BaseCacheMaintenanceLib/BaseCacheMaintenanceLib.inf
 
 [LibraryClasses.common.UEFI_APPLICATION, LibraryClasses.common.DXE_DRIVER]
