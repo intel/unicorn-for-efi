@@ -80,7 +80,7 @@
 GCC:*_*_*_CC_FLAGS = -nostdinc -I$(MODULE_DIR)/.. -I$(MODULE_DIR)/../include -I$(MODULE_DIR)/../qemu -I$(MODULE_DIR)/../qemu/include -I$(MODULE_DIR)/../qemu/tcg -I$(MODULE_DIR)/../qemu/target/arm -I$(MODULE_DIR)/../glib_compat -include $(UNICORN_EMU_ARCH).h -DCONFIG_TARGET_HEADER=\"config-target-$(UNICORN_EMU_ARCH).h\" -DUNICORN_FOR_EFI -DUNICORN_HAS_ARM64 -DNEED_CPU_H -DUNICORN_FOR_EFI_INTERNAL
 
 [BuildOptions.AARCH64]
-GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/aarch64
+GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/aarch64 -fno-lto
 
 [BuildOptions.RISCV64]
 GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/riscv
