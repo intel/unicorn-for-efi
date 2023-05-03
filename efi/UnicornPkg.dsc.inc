@@ -96,4 +96,5 @@
   GCC:*_*_*_CC_FLAGS = -Wno-psabi
 
 [BuildOptions.X64]
-  GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/i386 -I$(MODULE_DIR)/include/x86_64 -fno-lto
+  GCC:*_*_*_DLINK_FLAGS = -L$(MODULE_DIR)/x86_64 -llto-unicorn -Wl,-plugin-opt=-pass-through=-llto-unicorn
+  GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/i386 -I$(MODULE_DIR)/include/x86_64 -flto=auto
