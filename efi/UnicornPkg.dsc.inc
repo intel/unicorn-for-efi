@@ -65,6 +65,12 @@
   TimerLib|UefiCpuPkg/Library/BaseRiscV64CpuTimerLib/BaseRiscV64CpuTimerLib.inf
   CacheMaintenanceLib|MdePkg/Library/BaseCacheMaintenanceLib/BaseCacheMaintenanceLib.inf
 
+[LibraryClasses.X64]
+  IoLib|MdePkg/Library/BaseIoLibIntrinsic/BaseIoLibIntrinsic.inf
+  TimerLib|MdePkg/Library/SecPeiDxeTimerLibCpu/SecPeiDxeTimerLibCpu.inf
+  CacheMaintenanceLib|MdePkg/Library/BaseCacheMaintenanceLib/BaseCacheMaintenanceLib.inf
+  RegisterFilterLib|MdePkg/Library/RegisterFilterLibNull/RegisterFilterLibNull.inf
+
 [LibraryClasses.common.UEFI_APPLICATION, LibraryClasses.common.DXE_DRIVER]
   MemoryAllocationLib|MdePkg/Library/UefiMemoryAllocationLib/UefiMemoryAllocationLib.inf
   #
@@ -88,3 +94,6 @@
 
 [BuildOptions.AARCH64]
   GCC:*_*_*_CC_FLAGS = -Wno-psabi
+
+[BuildOptions.X64]
+  GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/i386 -I$(MODULE_DIR)/include/x86_64 -fno-lto

@@ -17,12 +17,17 @@
   VERSION_STRING                 = 1.0
   LIBRARY_CLASS                  = UnicornEngineLib
 
+[Sources.X64]
+  x86_64/glue.c
+  popcount.c
+  clrsb.c
+
 [Sources.RISCV64]
   riscv/glue.c
   riscv/ctz.c
   riscv/clz.c
-  riscv/popcount.c
-  riscv/clrsb.c
+  popcount.c
+  clrsb.c
 
 [Sources.AARCH64]
   aarch64/glue.c
@@ -97,3 +102,6 @@ GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/aarch64
 
 [BuildOptions.RISCV64]
 GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/riscv -I$(MODULE_DIR)/include/riscv
+
+[BuildOptions.X64]
+GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/i386

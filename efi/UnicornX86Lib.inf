@@ -84,3 +84,6 @@ GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/aarch64
 
 [BuildOptions.RISCV64]
 GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/riscv
+
+[BuildOptions.X64]
+GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/i386
