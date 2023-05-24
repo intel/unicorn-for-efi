@@ -68,6 +68,7 @@
 #define cpu_breakpoint_remove_all cpu_breakpoint_remove_all_arm
 #define cpu_abort cpu_abort_arm
 #define cpu_physical_memory_test_and_clear_dirty cpu_physical_memory_test_and_clear_dirty_arm
+#define cpu_interrupt_handler cpu_interrupt_handler_arm
 #define memory_region_section_get_iotlb memory_region_section_get_iotlb_arm
 #define flatview_add_to_dispatch flatview_add_to_dispatch_arm
 #define qemu_ram_get_host_addr qemu_ram_get_host_addr_arm

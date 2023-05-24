@@ -2396,4 +2396,5 @@
 #define gen_helper_float_class_s gen_helper_float_class_s_mips64
 #define gen_helper_float_class_d gen_helper_float_class_d_mips64
 #define helper_native_thunk helper_native_thunk_mips64
+#define cpu_interrupt_handler cpu_interrupt_handler_mips64
 #endif

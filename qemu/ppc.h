@@ -68,6 +68,7 @@
 #define cpu_breakpoint_remove_all cpu_breakpoint_remove_all_ppc
 #define cpu_abort cpu_abort_ppc
 #define cpu_physical_memory_test_and_clear_dirty cpu_physical_memory_test_and_clear_dirty_ppc
+#define cpu_interrupt_handler cpu_interrupt_handler_ppc
 #define memory_region_section_get_iotlb memory_region_section_get_iotlb_ppc
 #define flatview_add_to_dispatch flatview_add_to_dispatch_ppc
 #define qemu_ram_get_host_addr qemu_ram_get_host_addr_ppc
