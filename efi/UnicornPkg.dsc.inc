@@ -98,4 +98,4 @@
 
 [BuildOptions.X64]
   GCC:*_*_*_DLINK_FLAGS = -L$(WORKSPACE)/unicorn/efi/x86_64 -llto-unicorn -Wl,-plugin-opt=-pass-through=-llto-unicorn
-  GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/qemu/tcg/i386 -I$(WORKSPACE)/unicorn/efi/include/x86_64 -flto=auto
+  GCC:*_*_*_CC_FLAGS = -flto=auto

@@ -18,3 +18,10 @@
 [Includes]
   include
   ../include/unicorn
+
+[Includes.X64]
+  include/x86_64
+
+[Includes.RISCV64]
+  include/riscv
+

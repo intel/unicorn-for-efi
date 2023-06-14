@@ -101,7 +101,7 @@ GCC:*_*_*_CC_FLAGS = -nostdinc -I$(WORKSPACE)/unicorn -I$(WORKSPACE)/unicorn/inc
 GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/qemu/tcg/aarch64
 
 [BuildOptions.RISCV64]
-GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/qemu/tcg/riscv -I$(WORKSPACE)/unicorn/efi/include/riscv
+GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/qemu/tcg/riscv
 
 [BuildOptions.X64]
 GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/qemu/tcg/i386
