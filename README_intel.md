@@ -10,8 +10,7 @@ is to merge the UEFI support and assorted fixes into the main project repository
 
 See [README.md](README.md) for the original Unicorn Engine README.
 
-Building
---------
+# Building
 
 Currently the supported targets are AARCH64 UEFI and RISCV64 UEFI.
 
@@ -29,10 +28,21 @@ You get UnicornSampleX86, UnicornSampleArm64 and UnicornSampleRV.
 The latter shows how it's possible to link against multiple target
 emulation libraries.
 
-[MultiArchUefiPkg](https://github.com/intel/MultiArchUefiPkg) itself is a great example
-of how to use Unicorn with UEFI.
+[MultiArchUefiPkg](https://github.com/intel/MultiArchUefiPkg) itself is a great example of how to use Unicorn with UEFI.
 
-Note: There is an AArch64 issue where due to LTO the build of UnicornSampleArm64
-takes forever and then bombs out complaining about missing __ashrti3.
-This remains to be investigated, and a w/a is to modify the EDK2 Conf/tools_def.txt
-to avoid LTO.
+# Tested Compilers
+
+Here's a rough idea of what's supposed to work. File bugs if UnicornPkg doesn't build for you.
+
+## AArch64
+
+- gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.1)
+
+## RISC-V
+
+- gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04)
+- gcc version 12.2.0 (g2ee5e430018, from https://github.com/riscv-collab/riscv-gnu-toolchain)
+
+## X64
+
+- gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.1)
