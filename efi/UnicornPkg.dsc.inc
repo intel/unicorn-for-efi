@@ -93,7 +93,8 @@
   GCC:*_*_AARCH64_CC_XIPFLAGS ==
 
 [BuildOptions.AARCH64]
-  GCC:*_*_*_CC_FLAGS = -Wno-psabi
+  GCC:*_*_*_DLINK_FLAGS = -L$(WORKSPACE)/unicorn/efi/aarch64 -llto-unicorn -Wl,-plugin-opt=-pass-through=-llto-unicorn
+  GCC:*_*_*_CC_FLAGS = -Wno-psabi -flto=auto
 
 [BuildOptions.X64]
   GCC:*_*_*_DLINK_FLAGS = -L$(MODULE_DIR)/x86_64 -llto-unicorn -Wl,-plugin-opt=-pass-through=-llto-unicorn
