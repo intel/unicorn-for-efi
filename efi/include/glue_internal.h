@@ -309,7 +309,7 @@ static inline double fma(double x, double y, double z)
   UNREACHABLE();
 }
 
-static inline __int128 __sync_val_compare_and_swap_16(__int128 *ptr, __int128 oldval, __int128 newval)
+static inline __int128 __sync_val_compare_and_swap_16(void *ptr, __int128 oldval, __int128 newval)
 {
   abort();
   UNREACHABLE();
