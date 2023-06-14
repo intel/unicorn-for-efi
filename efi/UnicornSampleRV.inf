@@ -38,4 +38,4 @@
 [Pcd]
 
 [BuildOptions]
-GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../include -DUNICORN_FOR_EFI_INTERNAL
+GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/include -DUNICORN_FOR_EFI_INTERNAL

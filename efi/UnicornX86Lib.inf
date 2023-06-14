@@ -77,13 +77,13 @@
 [Pcd]
 
 [BuildOptions]
-GCC:*_*_*_CC_FLAGS = -nostdinc -I$(MODULE_DIR)/.. -I$(MODULE_DIR)/../include -I$(MODULE_DIR)/../qemu -I$(MODULE_DIR)/../qemu/include -I$(MODULE_DIR)/../qemu/tcg -I$(MODULE_DIR)/../qemu/target/$(UNICORN_EMU_ARCH) -I$(MODULE_DIR)/../glib_compat -include x86_64.h -DCONFIG_TARGET_HEADER=\"config-target-$(UNICORN_EMU_ARCH).h\" -DUNICORN_FOR_EFI -DUNICORN_HAS_X86 -DNEED_CPU_H -DUNICORN_FOR_EFI_INTERNAL
+GCC:*_*_*_CC_FLAGS = -nostdinc -I$(WORKSPACE)/unicorn -I$(WORKSPACE)/unicorn/include -I$(WORKSPACE)/unicorn/qemu -I$(WORKSPACE)/unicorn/qemu/include -I$(WORKSPACE)/unicorn/qemu/tcg -I$(WORKSPACE)/unicorn/qemu/target/$(UNICORN_EMU_ARCH) -I$(WORKSPACE)/unicorn/glib_compat -include x86_64.h -DCONFIG_TARGET_HEADER=\"config-target-$(UNICORN_EMU_ARCH).h\" -DUNICORN_FOR_EFI -DUNICORN_HAS_X86 -DNEED_CPU_H -DUNICORN_FOR_EFI_INTERNAL
 
 [BuildOptions.AARCH64]
-GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/aarch64
+GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/qemu/tcg/aarch64
 
 [BuildOptions.RISCV64]
-GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/riscv
+GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/qemu/tcg/riscv
 
 [BuildOptions.X64]
-GCC:*_*_*_CC_FLAGS = -I$(MODULE_DIR)/../qemu/tcg/i386
+GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/qemu/tcg/i386
