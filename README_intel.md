@@ -46,3 +46,21 @@ Here's a rough idea of what's supposed to work. File bugs if UnicornPkg doesn't 
 ## X64
 
 - gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.1)
+- gcc version 13.1.0 (Homebrew GCC 13.1.0)
+
+# FAQ
+
+## Help, building UnicornPkg.dsc crashes during linking!
+
+You're using a smaller machine and LTO is consuming all memory. Modify the UC_LTO_JOBS
+build parameter in UnicornPkg.dsc  If the value is too high, the build may abort. If
+the value is too low, the build may take forever.
+
+## Help, building UnicornPkg.dsc takes forever!
+
+Modify the UC_LTO_JOBS build parameter in UnicornPkg.dsc to a higher value or 'auto'.
+If the value is too high, the build may abort. If the value is too low, the build
+may take forever.
+
+Note: newer versions of GCC (e.g. GCC 13) do much better with LTO compared to GCC 9,
+both in terms of speed and resource use.
