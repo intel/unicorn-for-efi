@@ -1,6 +1,6 @@
 ## @file
 #
-#  Copyright (c) 2022, Intel Corporation. All rights reserved.<BR>
+#  Copyright (c) 2022-2023, Intel Corporation. All rights reserved.<BR>
 #
 #  This library is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU Lesser General Public
@@ -93,9 +93,25 @@
   GCC:*_*_AARCH64_CC_XIPFLAGS ==
 
 [BuildOptions.AARCH64]
-  GCC:*_*_*_DLINK_FLAGS = -L$(WORKSPACE)/unicorn/efi/aarch64 -llto-unicorn -Wl,-plugin-opt=-pass-through=-llto-unicorn
-  GCC:*_*_*_CC_FLAGS = -Wno-psabi -flto=auto
+
+GCC:*_*_*_CC_FLAGS = -Wno-psabi
+#
+# LTO options.
+#
+# Note these apply on top of whatever is implied by Conf/tools_def.txt!
+# If you want to disable LTO, you're going to have to edit tools_def.txt
+# as well.
+#
+GCC:*_*_*_DLINK_FLAGS = -L$(WORKSPACE)/unicorn/efi/aarch64 -llto-unicorn -Wl,-plugin-opt=-pass-through=-llto-unicorn -flto=$(UC_LTO_JOBS)
+GCC:*_*_*_CC_FLAGS = -flto=$(UC_LTO_JOBS)
 
 [BuildOptions.X64]
-  GCC:*_*_*_DLINK_FLAGS = -L$(WORKSPACE)/unicorn/efi/x86_64 -llto-unicorn -Wl,-plugin-opt=-pass-through=-llto-unicorn
-  GCC:*_*_*_CC_FLAGS = -flto=auto
+#
+# LTO options.
+#
+# Note these apply on top of whatever is implied by Conf/tools_def.txt!
+# If you want to disable LTO, you're going to have to edit tools_def.txt
+# as well.
+#
+GCC:*_*_*_DLINK_FLAGS = -L$(WORKSPACE)/unicorn/efi/x86_64 -llto-unicorn -Wl,-plugin-opt=-pass-through=-llto-unicorn -flto=$(UC_LTO_JOBS)
+GCC:*_*_*_CC_FLAGS = -flto=$(UC_LTO_JOBS)

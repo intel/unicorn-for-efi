@@ -18,6 +18,13 @@
   SUPPORTED_ARCHITECTURES        = AARCH64|RISCV64|X64
   BUILD_TARGETS                  = DEBUG|RELEASE|NOOPT
   SKUID_IDENTIFIER               = DEFAULT
+  #
+  # Stick to small value for small machines, or pass "auto" or
+  # "jobserver" for proper build hardware. If the value is too high,
+  # the build may abort. If the value is too low, the build may
+  # take forever.
+  #
+  UC_LTO_JOBS                    = 4
 
 !include unicorn/efi/UnicornPkg.dsc.inc
 
