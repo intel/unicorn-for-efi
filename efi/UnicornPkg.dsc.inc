@@ -90,10 +90,10 @@
 [Components]
 
 [BuildOptions]
-  GCC:*_*_AARCH64_CC_XIPFLAGS ==
+GCC:*_*_AARCH64_CC_XIPFLAGS ==
+GCC:*_*_*_CC_FLAGS = -Wno-array-parameter
 
 [BuildOptions.AARCH64]
-
 GCC:*_*_*_CC_FLAGS = -Wno-psabi
 #
 # LTO options.
