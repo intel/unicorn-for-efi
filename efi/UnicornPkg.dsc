@@ -63,6 +63,9 @@
   #  DEBUG_ERROR     0x80000000  // Error
   gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x8000004F
 
+[LibraryClasses]
+  DebugLib|MdePkg/Library/UefiDebugLibConOut/UefiDebugLibConOut.inf
+
 [Components]
   unicorn/efi/UnicornSampleX86.inf
   unicorn/efi/UnicornSampleRV.inf

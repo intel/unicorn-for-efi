@@ -36,16 +36,6 @@
   #
   # Misc.
   #
-  # When building UnicornPkg.dsc (i.e. the samples), always build with
-  # a ConOut DebugLib because printfs are wired up to DebugLib. When building
-  # as a library used elsewhere, it's assumed that no output will be desired
-  # by default.
-  #
-!if $(TARGET) == RELEASE && $(PLATFORM_NAME) != Unicorn
-  DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
-!else
-  DebugLib|MdePkg/Library/UefiDebugLibConOut/UefiDebugLibConOut.inf
-!endif
   DebugPrintErrorLevelLib|MdePkg/Library/BaseDebugPrintErrorLevelLib/BaseDebugPrintErrorLevelLib.inf
   PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
 
