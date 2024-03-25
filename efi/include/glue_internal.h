@@ -107,8 +107,8 @@ typedef union {
     } s;
 } utwords;
 
-STATIC_ASSERT(sizeof(unsigned long) == sizeof(UINT64));
-STATIC_ASSERT(sizeof(unsigned int) == sizeof(UINT32));
+STATIC_ASSERT(sizeof(unsigned long) == sizeof(UINT64), "sizeof(unsigned long) != sizeof(UINT64)");
+STATIC_ASSERT(sizeof(unsigned int) == sizeof(UINT32), "sizeof(unsigned int) != sizeof(UINT32)");
 
 static inline char *strerror(int errnum)
 {
