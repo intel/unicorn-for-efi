@@ -74,6 +74,11 @@ void x86_reg_reset(struct uc_struct *uc)
     env->features[FEAT_1_ECX] = CPUID_EXT_SSSE3 | CPUID_EXT_SSE41 |
                                 CPUID_EXT_SSE42 | CPUID_EXT_AES |
                                 CPUID_EXT_CX16;
+
+#ifdef UNICORN_FOR_EFI
+    env->features[FEAT_1_ECX] |= CPUID_EXT_RDRAND;
+#endif /* UNICORN_FOR_EFI */
+
     env->features[FEAT_8000_0001_EDX] = CPUID_EXT2_3DNOW | CPUID_EXT2_RDTSCP;
     env->features[FEAT_8000_0001_ECX] = CPUID_EXT3_LAHF_LM | CPUID_EXT3_ABM |
                                         CPUID_EXT3_SKINIT | CPUID_EXT3_CR8LEG;
