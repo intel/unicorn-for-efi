@@ -476,6 +476,24 @@ target_ulong HELPER(rdrand)(CPUX86State *env)
 {
     target_ulong ret;
 
+#ifdef UNICORN_FOR_EFI
+    /*
+     * In a UEFI environment, rdrand is modeled but always fails.
+     * The use case is MultiArchUefiPkg. Some drivers use rdrand,
+     * but subsequently scribble to bottom 64k of RAM on
+     * success.
+     *
+     * Yes, it's a hack. Hopefully will never need to deal with code
+     * that expects rdrand to succeed.  If that ever happens, MUA
+     * will need to negotiate these little warts based on driver
+     * fingerprinting. That'll be exciting...
+     *
+     * Good code should be using proper RNG protocols anyway...
+     */
+    env->cc_src = 0;
+    return 0;
+#endif /* UNICORN_FOR_EFI */
+
     if (qemu_guest_getrandom(&ret, sizeof(ret)) < 0) {
         // qemu_log_mask(LOG_UNIMP, "rdrand: Crypto failure: %s",
         //               error_get_pretty(err));
