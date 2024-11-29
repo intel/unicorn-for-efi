@@ -776,6 +776,8 @@ static void page_lock_pair(struct uc_struct *uc, PageDesc **ret_p1, tb_page_addr
   /* We have a 256MB branch region, but leave room to make sure the
      main executable is also within that region.  */
 # define MAX_CODE_GEN_BUFFER_SIZE  (128 * MiB)
+#elif defined(__loongarch64)
+# define MAX_CODE_GEN_BUFFER_SIZE  (128 * MiB)
 #else
 # define MAX_CODE_GEN_BUFFER_SIZE  ((size_t)-1)
 #endif
