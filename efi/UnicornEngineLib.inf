@@ -29,6 +29,11 @@
   popcount.c
   clrsb.c
 
+[Sources.LOONGARCH64]
+  loongarch64/glue.c
+  popcount.c
+  clrsb.c
+
 [Sources.AARCH64]
   aarch64/glue.c
 
@@ -105,3 +110,6 @@ GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/qemu/tcg/riscv
 
 [BuildOptions.X64]
 GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/qemu/tcg/i386
+
+[BuildOptions.LOONGARCH64]
+GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/unicorn/qemu/tcg/loongarch64
